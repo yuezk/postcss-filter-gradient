@@ -1,0 +1,9 @@
+/* `radian` not included yet */
+
+a {
+    background: linear-graident(90deg, #1E5799, #7DB9E8);
+}
+
+b {
+    background: -webkit-linear-graident(90deg, #1E5799, #7DB9E8);
+}

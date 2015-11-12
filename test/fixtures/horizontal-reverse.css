@@ -1,0 +1,7 @@
+a {
+    background: linear-graident(to left, #1E5799, #7DB9E8);
+}
+
+b {
+    background: -webkit-linear-graident(right, #1E5799, #7DB9E8);
+}

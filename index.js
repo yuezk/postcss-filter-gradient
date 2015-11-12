@@ -2,12 +2,11 @@ var postcss = require('postcss');
 
 module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
     opts = opts || {};
+    var filter = /^background(-image)?$/;
 
-    // Work with options here
+    return function (css) {
+        css.walkDecls(filter, function (decl) {
 
-    return function (css, result) {
-
-        // Transform CSS AST here
-
+        });
     };
 });
