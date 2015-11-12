@@ -1,0 +1,32 @@
+{
+  "name": "postcss-filter-gradient",
+  "version": "0.0.0",
+  "description": "PostCSS plugin for generating the old IE supported filter gradient.",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "ie",
+    "filter",
+    "gradient"
+  ],
+  "author": "Kevin Yue <yuezk001@gmail.com>",
+  "license": "MIT",
+  "repository": "yuezk/postcss-filter-gradient",
+  "bugs": {
+    "url": "https://github.com/yuezk/postcss-filter-gradient/issues"
+  },
+  "homepage": "https://github.com/yuezk/postcss-filter-gradient",
+  "dependencies": {
+    "postcss": "^5.0.2"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-mocha": "^2.1.3"
+  },
+  "scripts": {
+    "test": "gulp"
+  }
+}
