@@ -1,5 +1,7 @@
 # PostCSS Filter Gradient [![Build Status][ci-img]][ci]
 
+### !!! Working in progress, not ready to use !!!
+
 [PostCSS] plugin for generating the old IE supported filter gradient..
 
 [PostCSS]: https://github.com/postcss/postcss
