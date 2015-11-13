@@ -1,7 +1,7 @@
 a {
-    background: linear-graident(to bottom, #1E5799, #7DB9E8);
+    background: linear-gradient(to bottom, #1E5799, #7DB9E8);
 }
 
 b {
-    background: linear-graident(to bottom, blue, green);
+    background: linear-gradient(to bottom, blue, green);
 }

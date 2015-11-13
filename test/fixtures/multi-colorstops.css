@@ -3,5 +3,5 @@ a {
 }
 
 b {
-    background: linear-graident(to bottom, blue, green, red);
+    background: linear-gradient(to bottom, blue, green, red);
 }
