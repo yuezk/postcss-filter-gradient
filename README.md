@@ -52,6 +52,12 @@ You can use the [postcss-gradientfixer][postcss-gradientfixer] to unprefix it.
 
 Not yet. I will add it later.
 
+## TODO
+
+- Replace gradient parser
+- Support angular gradient
+- Add rgba, hls, hlsa color test case
+
 See [PostCSS] docs for examples for your environment.
 
 [postcss-gradientfixer]: https://github.com/hallvors/postcss-gradientfixer
