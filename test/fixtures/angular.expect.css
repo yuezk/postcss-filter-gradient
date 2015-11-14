@@ -1,32 +1,39 @@
-/* only deg are supported right now */
 a {
     background: linear-gradient(0, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF7DB9E8', EndColorStr='#FF1E5799');
 }
 
 b {
     background: linear-gradient(90deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#FF1E5799', EndColorStr='#FF7DB9E8');
 }
 
 c {
     background: linear-gradient(180deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF1E5799', EndColorStr='#FF7DB9E8');
 }
 
 d {
     background: linear-gradient(270deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#FF7DB9E8', EndColorStr='#FF1E5799');
 }
 
 e {
     background: linear-gradient(360deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF7DB9E8', EndColorStr='#FF1E5799');
 }
 
 f {
     background: linear-gradient(-90deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#FF7DB9E8', EndColorStr='#FF1E5799');
 }
 
 g {
     background: linear-gradient(-180deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF1E5799', EndColorStr='#FF7DB9E8');
 }
 
 h {
     background: linear-gradient(-270deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#FF1E5799', EndColorStr='#FF7DB9E8');
 }
