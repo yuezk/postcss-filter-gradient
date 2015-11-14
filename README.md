@@ -55,4 +55,10 @@ and convert `10deg` to `top`, positive angluar are also supported.
 
 See [PostCSS] docs for examples for your environment.
 
+## [CHANGELOG](CHANGELOG)
+
+## LICENSE
+
+[MIT](LICENSE)
+
 [postcss-gradientfixer]: https://github.com/hallvors/postcss-gradientfixer
