@@ -1,0 +1,11 @@
+a {
+    background: linear-gradient(rgb(30, 87, 153), rgb(125, 185, 232));
+}
+
+b {
+    background: linear-gradient(hsl(212, 67%, 36%), #7DB9E8);
+}
+
+c {
+    background: linear-gradient(rgba(30, 87, 153, 0.1), hsla(206, 70%, 70%, 0.8));
+}

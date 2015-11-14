@@ -19,7 +19,6 @@
   "homepage": "https://github.com/yuezk/postcss-filter-gradient",
   "dependencies": {
     "filter-gradient": "^1.0.0",
-    "gradient-parser": "^0.1.5",
     "postcss": "^5.0.2"
   },
   "devDependencies": {

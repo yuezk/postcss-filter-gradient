@@ -60,7 +60,11 @@ describe('postcss-filter-gradient', function () {
         test('multi-background', {}, done);
     });
 
-    it.skip('should support angular gradient', function (done) {
+    it('should support angular gradient', function (done) {
         test('angular', {}, done);
+    });
+
+    it('should support multi color format', function (done) {
+        test('color-format', {}, done);
     });
 });
