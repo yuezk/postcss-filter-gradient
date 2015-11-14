@@ -1,6 +1,6 @@
 # PostCSS Filter Gradient
 
-[PostCSS] plugin for generating the old IE supported filter gradient..
+[PostCSS] plugin for generating the old IE supported filter gradient.
 
 [![Build Status][ci-img]][ci]
 
@@ -37,7 +37,7 @@ postcss([ require('postcss-filter-gradient') ])
 
 ## Limitions
 
-The IE filter gradient only support horizontal and vertical directions, and only support two colors. If there are more
+The IE filter gradient only support horizontal and vertical directions, and only support two colors. So, if there are more
 than two colors in the color stops, we only pick the first and the last one.
 
 ## FAQ
@@ -46,17 +46,12 @@ than two colors in the color stops, we only pick the first and the last one.
 
 No. We only transform the standard `linear-gradient` syntax.
 
-You can use the [postcss-gradientfixer][postcss-gradientfixer] to unprefix it.
+You can use the [postcss-gradientfixer][postcss-gradientfixer] to unprefix it first.
 
 ### Does it support angluar gradient?
 
-Not yet. I will add it later.
-
-## TODO
-
-- Replace gradient parser
-- Support angular gradient
-- Add rgba, hls, hlsa color test case
+Yes. This plugin only support `deg` unit. It will convert angular to the nearest direction. For example, it convert `90deg` to `right`
+and convert `10deg` to `top`, positive angluar are also supported.
 
 See [PostCSS] docs for examples for your environment.
 
