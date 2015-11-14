@@ -49,27 +49,6 @@ function parseGradient(str) {
     };
 }
 
-function getGradientsFromDecl(decl) {
-    return list.comma(decl.value).filter(function (seg) {
-        // Only support the standard linear-gradient syntax
-        return seg.indexOf('linear-gradient') === 0;
-    });
-}
-
-function getGradientFromRule(rule) {
-    var gradient = {};
-    rule.walkDecls(DECL_FILTER, function (decl) {
-        var gradients =  getGradientsFromDecl(decl);
-        // Only select the first gradienat if there more than one gradienats
-        if (gradients.length) {
-            gradient.value = gradients[0].trim().slice(16, -1);
-            gradient.decl = decl;
-        }
-    });
-
-    return gradient;
-}
-
 function angleToDirection(angle) {
     var direction;
     var count;
@@ -93,7 +72,7 @@ function angleToDirection(angle) {
     return direction;
 }
 
-// Get the gradient direction: left, right, top, bottom
+// Get the gradient direction: left, right, top or bottom
 function getDirection(gradient) {
     var direction;
     var angle;
@@ -129,6 +108,27 @@ function getFilterFromGradient(gradient) {
     type = /top|bottom/.test(direction) ? 0 : 1;
 
     return filterGradient(startColor, endColor, type);
+}
+
+function getGradientsFromDecl(decl) {
+    return list.comma(decl.value).filter(function (seg) {
+        // Only support the standard linear-gradient syntax
+        return seg.indexOf('linear-gradient') === 0;
+    });
+}
+
+function getGradientFromRule(rule) {
+    var gradient = {};
+    rule.walkDecls(DECL_FILTER, function (decl) {
+        var gradients =  getGradientsFromDecl(decl);
+        // Only select the first gradienat if there more than one gradienats
+        if (gradients.length) {
+            gradient.value = gradients[0].trim().slice(16, -1);
+            gradient.decl = decl;
+        }
+    });
+
+    return gradient;
 }
 
 module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
