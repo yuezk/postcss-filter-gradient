@@ -35,7 +35,7 @@ npm install postcss-filter-gradient --save-dev
 postcss([ require('postcss-filter-gradient') ])
 ```
 
-## Limitions
+## Limitation
 
 The IE filter gradient only support horizontal and vertical directions, and only support two colors. So, if there are more
 than two colors in the color stops, we only pick the first and the last one.
