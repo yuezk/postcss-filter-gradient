@@ -1,3 +1,9 @@
+### 0.2.0 - 2015-12-20
+
+- Add some warning messages (#3)
+- Add `angleFallback` option
+- Change filter string format (#2)
+
 ### 0.1.1 - 2015-11-14
 
 - Replace gradient parser

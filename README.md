@@ -41,7 +41,8 @@ postcss([ require('postcss-filter-gradient') ])
 
 Default: `true`
 
-IE filter doesn't support angular gradient. By default, when processing the angular gradient, we will convert the angular to its closest direction. You can disable this feature by setting this option to `false`.
+IE filter doesn't support angular gradient. By default, when processing the angular gradient,
+we will convert the angle to its closest direction. You can disable this feature by setting this option to `false`.
 
 ## Limitation
 
