@@ -11,15 +11,15 @@
 ```css
 .foo {
     /* Input example */
-    background: linear-gradient(to bottom, #1E5799, #7DB9E8);
+    background: linear-gradient(to bottom, #1e5799, #7db9e8);
 }
 ```
 
 ```css
 .foo {
     /* Output example */
-    background: linear-gradient(to bottom, #1E5799, #7DB9E8);
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF1E5799', EndColorStr='#FF7DB9E8');
+    background: linear-gradient(to bottom, #1e5799, #7db9e8);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1e5799', endColorstr='#ff7db9e8', GradientType=0);
 }
 ```
 
