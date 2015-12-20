@@ -168,6 +168,8 @@ function getGradientFromRule(rule) {
 
 module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
     opts = opts || {};
+    opts.angleFallback =
+        opts.angleFallback === undefined ?  true : opts.angleFallback;
 
     return function (root, result) {
         root.walkRules(function (rule) {
@@ -184,7 +186,7 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
                 if (gradient.value) {
                     filter = gradientToFilter(gradient.value);
 
-                    if (opts.disableFallback && filter.isFallback) {
+                    if (!opts.angleFallback && filter.isFallback) {
                         return;
                     }
 

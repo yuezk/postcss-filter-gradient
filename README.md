@@ -35,6 +35,14 @@ npm install postcss-filter-gradient --save-dev
 postcss([ require('postcss-filter-gradient') ])
 ```
 
+## Options
+
+### angleFallback
+
+Default: `true`
+
+IE filter doesn't support angular gradient. By default, when processing the angular gradient, we will convert the angular to its closest direction. You can disable this feature by setting this option to `false`.
+
 ## Limitation
 
 The IE filter gradient only support horizontal and vertical directions, and only support two colors. So, if there are more
@@ -50,7 +58,7 @@ You can use the [postcss-gradientfixer][postcss-gradientfixer] to unprefix it fi
 
 ### Does it support angluar gradient?
 
-Yes. This plugin only support `deg` unit. It will convert angular to the nearest direction. For example, it convert `90deg` to `right`
+Yes. This plugin only support `deg` unit. It will convert angular to the closest direction. For example, it convert `90deg` to `right`
 and convert `10deg` to `top`, positive angluar are also supported.
 
 See [PostCSS] docs for examples for your environment.

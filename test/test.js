@@ -98,9 +98,9 @@ describe('postcss-filter-gradient', function () {
         }
     );
 
-    it('should disable fallback when `option.disableFallback` is true',
+    it('should disable angle fallback when `option.angleFallback` is true',
         function (done) {
-            test('disable-fallback', { disableFallback: true }, done);
+            test('angle-fallback', { angleFallback: false }, done);
         }
     );
 });
