@@ -1,4 +1,4 @@
 a {
     background: url(../images/bg.png), linear-gradient(#1E5799, #7DB9E8), linear-gradient(to bottom, blue, green);
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF1E5799', EndColorStr='#FF7DB9E8');
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1e5799', endColorstr='#ff7db9e8', GradientType=0);
 }

@@ -100,7 +100,7 @@ describe('postcss-filter-gradient', function () {
 
     it('should disable angle fallback when `option.angleFallback` is true',
         function (done) {
-            test('angle-fallback', { angleFallback: false }, done);
+            test('option-angle-fallback', { angleFallback: false }, done);
         }
     );
 });

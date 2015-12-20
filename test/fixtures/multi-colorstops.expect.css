@@ -1,9 +1,9 @@
 a {
     background: linear-gradient(rgb(30, 87, 153) 0%, rgb(125, 185, 232) 76%, rgb(96, 178, 130) 100%);
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF1E5799', EndColorStr='#FF60B282');
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1e5799', endColorstr='#ff60b282', GradientType=0);
 }
 
 b {
     background: linear-gradient(to bottom, blue, green, red);
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FF0000FF', EndColorStr='#FFFF0000');
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000ff', endColorstr='#ffff0000', GradientType=0);
 }
