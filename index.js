@@ -50,10 +50,13 @@ function parseGradient(str) {
 }
 
 function angleToDirection(angle) {
+    var result = {};
     var direction;
+    var isFallback;
     var count;
 
-    // handle to negtive value
+    isFallback = angle % 90 !== 0;
+    // handle the negtive value
     angle = (angle % 360 + 360) % 360;
     count = angle / 45;
 
@@ -69,32 +72,52 @@ function angleToDirection(angle) {
         direction = 'top';
     }
 
-    return direction;
+    result.direction = direction;
+
+    if (isFallback) {
+        result.isFallback = true;
+        result.message =
+            'IE filter doesn\'t support angular gradient, ' +
+            'we use the closest side as the fallback.';
+    }
+
+    return result;
 }
 
 // Get the gradient direction: left, right, top or bottom
 function getDirection(gradient) {
-    var direction;
+    var segs;
     var angle;
+    var result = {};
 
     if (gradient.sideCorner) {
-        direction = gradient.sideCorner.split(/\s+/)[0];
+        segs = gradient.sideCorner.split(/\s+/);
+        result.direction = segs[0];
+        // side corner is  `top right` or `bottm left` etc.
+        if (segs.length > 1) {
+            // fallback to one direction
+            result.isFallback = true;
+            result.message =
+                'IE filter doesn\'t support side corner gradient, ' +
+                'we use the first side of the side corner as fallback.';
+        }
     } else if (gradient.angle.value !== undefined) {
         // treat the unit as deg
         angle = parseInt(gradient.angle.value, 10);
-        direction = angleToDirection(angle);
+        result = angleToDirection(angle);
     } else {
-        direction = 'bottom';
+        result.direction = 'bottom';
     }
 
-    return direction;
+    return result;
 }
 
-function getFilterFromGradient(gradient) {
+function gradientToFilter(gradient) {
     var obj = parseGradient(gradient);
     var startColor = obj.colorStops[0].color;
     var endColor = obj.colorStops.slice(-1)[0].color;
-    var direction = getDirection(obj);
+    var result = getDirection(obj);
+    var direction = result.direction;
     var type;
     var tmp;
 
@@ -107,7 +130,11 @@ function getFilterFromGradient(gradient) {
     // 0: vertical, 1:horizontal
     type = /top|bottom/.test(direction) ? 0 : 1;
 
-    return filterGradient(startColor, endColor, type);
+    return {
+        string: filterGradient(startColor, endColor, type),
+        isFallback: result.isFallback,
+        message: result.message
+    };
 }
 
 function getGradientsFromDecl(decl) {
@@ -121,10 +148,18 @@ function getGradientFromRule(rule) {
     var gradient = {};
     rule.walkDecls(DECL_FILTER, function (decl) {
         var gradients =  getGradientsFromDecl(decl);
+        var len = gradients.length;
         // Only select the first gradienat if there more than one gradienats
-        if (gradients.length) {
+        if (len) {
+            // skip `linear-gradient`
             gradient.value = gradients[0].trim().slice(16, -1);
             gradient.decl = decl;
+
+            if (len > 1) {
+                gradient.warnings =
+                    'IE filter doesn\'t support multiple gradients, ' +
+                    'we pick the first as fallback.';
+            }
         }
     });
 
@@ -134,17 +169,39 @@ function getGradientFromRule(rule) {
 module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
     opts = opts || {};
 
-    return function (root) {
+    return function (root, result) {
         root.walkRules(function (rule) {
             var gradient;
             var filter;
 
             if (!hasFilter(rule)) {
                 gradient = getGradientFromRule(rule);
-                if (gradient.value) {
-                    filter = getFilterFromGradient(gradient.value);
-                    gradient.decl.cloneAfter({ prop: 'filter', value: filter });
+
+                if (gradient.warnings) {
+                    gradient.decl.warn(result, gradient.warnings);
                 }
+
+                if (gradient.value) {
+                    filter = gradientToFilter(gradient.value);
+
+                    if (opts.disableFallback && filter.isFallback) {
+                        return;
+                    }
+
+                    if (filter.isFallback) {
+                        gradient.decl.warn(result, filter.message);
+                    }
+
+                    gradient.decl.cloneAfter({
+                        prop: 'filter', value: filter.string
+                    });
+                }
+            } else {
+                rule.warn(
+                    result,
+                    'The `filter` declaration already exists, ' +
+                    'we have skipped this rule.'
+                );
             }
         });
     };

@@ -1,0 +1,12 @@
+a {
+    background: linear-gradient(30deg, #1E5799, #7DB9E8);
+}
+
+b {
+    background: linear-gradient(to top right, #1E5799, #7DB9E8);
+}
+
+c {
+    background: linear-gradient(90deg, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#FF1E5799', EndColorStr='#FF7DB9E8');
+}

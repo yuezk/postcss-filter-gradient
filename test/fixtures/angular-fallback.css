@@ -1,0 +1,27 @@
+a {
+    background: linear-gradient(30deg, #1E5799, #7DB9E8);
+}
+
+b {
+    background: linear-gradient(60deg, #1E5799, #7DB9E8);
+}
+
+c {
+    background: linear-gradient(-20deg, #1E5799, #7DB9E8);
+}
+
+d {
+    background: linear-gradient(130deg, #1E5799, #7DB9E8);
+}
+
+e {
+    background: linear-gradient(150deg, #1E5799, #7DB9E8);
+}
+
+f {
+    background: linear-gradient(240deg, #1E5799, #7DB9E8);
+}
+
+g {
+    background: linear-gradient(-45deg, #1E5799, #7DB9E8);
+}
