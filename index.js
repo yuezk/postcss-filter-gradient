@@ -13,7 +13,7 @@ function hasFilter(rule) {
 
 function parseGradient(str) {
     // match 0 and any number with unit
-    var rAngle = /(0|(?:[+-]?\d*\.?\d+)(deg|grad|rad|turn))/;
+    var rAngle = /((?:[+-]?\d*\.?\d+)(deg|grad|rad|turn)|0)/;
     // match side and any corner, in browser,
     // `top right` and `right top` are the same,
     // so we should put this situation into consideration
@@ -22,7 +22,7 @@ function parseGradient(str) {
     // match color stops, the color format is not very precise
     var rColorStops = /\s*(#[0-9a-f]{3,6}|(?:hsl|rgb)a?\(.+?\)|\w+)(?:\s+((?:[+-]?\d*\.?\d+)(?:%|[a-z]+)?))?/gi;
     // the final gradient line regexp
-    var rGradientLine = new RegExp('^\\s*' + rAngle.source + '|' + rSideCorner.source);
+    var rGradientLine = new RegExp('^\\s*' + rAngle.source + '|' + rSideCorner.source, 'i');
     /* eslint-enable max-len */
 
     var position = str.match(rGradientLine) || ['', null, 'deg', 'bottom'];
@@ -47,6 +47,19 @@ function parseGradient(str) {
         sideCorner: sideCorner,
         colorStops: stops
     };
+}
+
+function normalizeAngle(value, unit) {
+    var num = parseFloat(value);
+    var fullMap = {
+        grad: 400,
+        rad: 2,
+        turn: 1,
+        deg: 360
+    };
+    unit = (unit || 'deg').toLowerCase();
+
+    return num / fullMap[unit] * 360;
 }
 
 function angleToDirection(angle) {
@@ -102,8 +115,7 @@ function getDirection(gradient) {
                 'we use the first side of the side corner as fallback.';
         }
     } else if (gradient.angle.value !== undefined) {
-        // treat the unit as deg
-        angle = parseInt(gradient.angle.value, 10);
+        angle = normalizeAngle(gradient.angle.value, gradient.angle.unit);
         result = angleToDirection(angle);
     } else {
         result.direction = 'bottom';
@@ -122,13 +134,13 @@ function gradientToFilter(gradient) {
     var tmp;
 
     // Swap color if needed;
-    if (/top|left/.test(direction)) {
+    if (/top|left/i.test(direction)) {
         tmp = startColor;
         startColor = endColor;
         endColor = tmp;
     }
     // 0: vertical, 1:horizontal
-    type = /top|bottom/.test(direction) ? 0 : 1;
+    type = /top|bottom/i.test(direction) ? 0 : 1;
 
     return {
         string: filterGradient(startColor, endColor, type),
@@ -190,10 +202,12 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
                         return;
                     }
 
+                    // fallback, should warns developer
                     if (filter.isFallback) {
                         gradient.decl.warn(result, filter.message);
                     }
 
+                    // append filter string
                     gradient.decl.cloneAfter({
                         prop: 'filter', value: filter.string
                     });

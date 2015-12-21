@@ -1,0 +1,11 @@
+a {
+    background: linear-gradient(0.25turn, #1E5799, #7DB9E8);
+}
+
+b {
+    background: linear-gradient(0.5turn, #1E5799, #7DB9E8);
+}
+
+c {
+    background: linear-gradient(-0.25turn, #1E5799, #7DB9E8);
+}

@@ -1,0 +1,14 @@
+a {
+    background: linear-gradient(0.5rad, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1e5799', endColorstr='#ff7db9e8', GradientType=1);
+}
+
+b {
+    background: linear-gradient(1rad, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1e5799', endColorstr='#ff7db9e8', GradientType=0);
+}
+
+c {
+    background: linear-gradient(-0.5rad, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff7db9e8', endColorstr='#ff1e5799', GradientType=1);
+}

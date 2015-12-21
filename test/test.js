@@ -73,20 +73,22 @@ describe('postcss-filter-gradient', function () {
         test('multi-background', {}, done, warnings);
     });
 
-    it('should support angular gradient', function (done) {
-        test('angular', {}, done);
-    });
-
     it('should support multi color format', function (done) {
         test('color-format', {}, done);
     });
 
-    it('should support fallback when use angular gradient', function (done) {
-        var warnings =
-            'IE filter doesn\'t support angular gradient, ' +
-            'we use the closest side as the fallback.';
-        test('angular-fallback', {}, done, warnings);
+    it('should support angular gradient', function (done) {
+        test('angular', {}, done);
     });
+
+    it('should support fallback when use angular gradient',
+        function (done) {
+            var warnings =
+                'IE filter doesn\'t support angular gradient, ' +
+                'we use the closest side as the fallback.';
+            test('angular-fallback', {}, done, warnings);
+        }
+    );
 
     it('should support fallback when use side corner gradient',
         function (done) {
@@ -103,4 +105,16 @@ describe('postcss-filter-gradient', function () {
             test('option-angle-fallback', { angleFallback: false }, done);
         }
     );
+
+    it('should handle the `grad` unit correctly', function (done) {
+        test('grad', {}, done);
+    });
+
+    it('should handle the `rad` unit correctly', function (done) {
+        test('rad', {}, done);
+    });
+
+    it('should handle the `turn` unit correctly', function (done) {
+        test('turn', {}, done);
+    });
 });
