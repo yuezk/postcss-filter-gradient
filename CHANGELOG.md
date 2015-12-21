@@ -1,3 +1,7 @@
+### 0.2.1 - 2015-12-21
+
+- Add supports for `rad, grad, turn` unit.
+
 ### 0.2.0 - 2015-12-20
 
 - Add some warning messages (#3)
