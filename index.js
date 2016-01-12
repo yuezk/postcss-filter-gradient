@@ -144,6 +144,7 @@ function gradientToFilter(gradient) {
 
     return {
         string: filterGradient(startColor, endColor, type),
+        isMultiColor: obj.colorStops.length > 2,
         isFallback: result.isFallback,
         message: result.message
     };
@@ -182,6 +183,8 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
     opts = opts || {};
     opts.angleFallback =
         opts.angleFallback === undefined ?  true : opts.angleFallback;
+    opts.skipMultiColor =
+        opts.skipMultiColor === undefined ? false : opts.skipMultiColor;
 
     return function (root, result) {
         root.walkRules(function (rule) {
@@ -197,6 +200,10 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
 
                 if (gradient.value) {
                     filter = gradientToFilter(gradient.value);
+
+                    if (opts.skipMultiColor && filter.isMultiColor) {
+                        return;
+                    }
 
                     if (!opts.angleFallback && filter.isFallback) {
                         return;
