@@ -1,0 +1,8 @@
+a {
+    background: linear-gradient(rgb(30, 87, 153) 0%, rgb(125, 185, 232) 76%, rgb(96, 178, 130) 100%);
+}
+
+b {
+    background: linear-gradient(to bottom, blue, green, red);
+}
+

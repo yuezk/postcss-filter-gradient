@@ -1,3 +1,7 @@
+### 0.2.2 - 2016-01-13
+
+- Add `skipMultiColor` option.
+
 ### 0.2.1 - 2015-12-21
 
 - Add supports for `rad, grad, turn` unit.

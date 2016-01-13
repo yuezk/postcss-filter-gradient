@@ -44,10 +44,18 @@ Default: `true`
 IE filter doesn't support angular gradient. By default, when processing the angular gradient,
 we will convert the angle to its closest direction. You can disable this feature by setting this option to `false`.
 
+### skipMultiColor
+
+Default: `false`
+
+If set to `true`, we will not handle the rules which have multi color stops. It is useful when you want use a
+background color as fallback.
+
 ## Limitation
 
 The IE filter gradient only support horizontal and vertical directions, and only support two colors. So, if there are more
-than two colors in the color stops, we only pick the first and the last one.
+than two colors in the color stops, we only pick the first and the last one. You can skip it by setting
+`option.skipMultiColor` to `true`.
 
 ## FAQ
 
