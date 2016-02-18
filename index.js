@@ -17,9 +17,26 @@ function parseGradient(str) {
     // match side and any corner, in browser,
     // `top right` and `right top` are the same,
     // so we should put this situation into consideration
-    /* eslint-disable max-len */
-    var rSideCorner = /to\s+((?:left|right|top|bottom)|(?:(?:(?:left|right)\s+(?:top|bottom))|(?:(?:top|bottom)\s+(?:left|right))))(?=\s*,)/;
+    var rSideCorner = new RegExp(
+      'to\\s+' +
+      '(' + // 1
+          '(?:left|right|top|bottom)' +
+          '|' +
+          '(?:' +
+              '(?:' + // left top, left bottom, right top, right bottom
+                  '(?:left|right)\\s+(?:top|bottom)' +
+              ')' +
+              '|' +
+              '(?:' + // top left, top right, bottom left, bottom right
+                  '(?:top|bottom)\\s+(?:left|right)' +
+              ')' +
+          ')' +
+      ')' + // end 1
+      '(?=\\s*,)'
+    );
+
     // match color stops, the color format is not very precise
+    /* eslint-disable max-len */
     var rColorStops = /\s*(#[0-9a-f]{3,6}|(?:hsl|rgb)a?\(.+?\)|\w+)(?:\s+((?:[+-]?\d*\.?\d+)(?:%|[a-z]+)?))?/gi;
     // the final gradient line regexp
     var rGradientLine = new RegExp('^\\s*' + rAngle.source + '|' + rSideCorner.source, 'i');
