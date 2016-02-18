@@ -50,8 +50,24 @@ describe('postcss-filter-gradient', function () {
         test('simple', {}, done);
     });
 
+    it('should support top', function (done) {
+        test('top', {}, done);
+    });
+
+    it('should support bottom', function (done) {
+        test('bottom', {}, done);
+    });
+
     it('should support vertical reverse', function (done) {
         test('vertical-reverse', {}, done);
+    });
+
+    it('should support right', function (done) {
+        test('right', {}, done);
+    });
+
+    it('should support left', function (done) {
+        test('left', {}, done);
     });
 
     it('should support horizontal direction', function (done) {

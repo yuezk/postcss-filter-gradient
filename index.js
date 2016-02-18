@@ -18,17 +18,19 @@ function parseGradient(str) {
     // `top right` and `right top` are the same,
     // so we should put this situation into consideration
     var rSideCorner = new RegExp(
-      'to\\s+' +
       '(' + // 1
-          '(?:left|right|top|bottom)' +
-          '|' +
+          '(?:to\\s+)?' +
           '(?:' +
-              '(?:' + // left top, left bottom, right top, right bottom
-                  '(?:left|right)\\s+(?:top|bottom)' +
-              ')' +
+              '(?:left|right|top|bottom)' +
               '|' +
-              '(?:' + // top left, top right, bottom left, bottom right
-                  '(?:top|bottom)\\s+(?:left|right)' +
+              '(?:' +
+                  '(?:' + // left top, left bottom, right top, right bottom
+                      '(?:left|right)\\s+(?:top|bottom)' +
+                  ')' +
+                  '|' +
+                  '(?:' + // top left, top right, bottom left, bottom right
+                      '(?:top|bottom)\\s+(?:left|right)' +
+                  ')' +
               ')' +
           ')' +
       ')' + // end 1
@@ -42,7 +44,7 @@ function parseGradient(str) {
     var rGradientLine = new RegExp('^\\s*' + rAngle.source + '|' + rSideCorner.source, 'i');
     /* eslint-enable max-len */
 
-    var position = str.match(rGradientLine) || ['', null, 'deg', 'bottom'];
+    var position = str.match(rGradientLine) || ['', null, 'deg', 'to bottom'];
     var angle = position[1];
     var sideCorner = position[3];
     var unit = position[2];
@@ -122,8 +124,27 @@ function getDirection(gradient) {
 
     if (gradient.sideCorner) {
         segs = gradient.sideCorner.split(/\s+/);
+
+        var to = segs[0] === 'to';
+        if (to) {
+            // sideCorner starts with "to" so we shift it off since we don't
+          // need this element anymore, and continue with generating the
+          // gradient in the normal direction.
+            segs.shift();
+        } else {
+            // sideCorner does not start with "to", so we need to reverse the
+            // direction.
+            var reverseDirections = {
+                top: 'bottom',
+                bottom: 'top',
+                left: 'right',
+                right: 'left'
+            };
+            segs[0] = reverseDirections[segs[0]];
+        }
+
         result.direction = segs[0];
-        // side corner is  `top right` or `bottm left` etc.
+        // side corner is  `top right` or `bottom left` etc.
         if (segs.length > 1) {
             // fallback to one direction
             result.isFallback = true;

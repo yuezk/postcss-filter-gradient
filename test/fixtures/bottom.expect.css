@@ -1,0 +1,4 @@
+a {
+    background: linear-gradient(bottom, #1E5799, #7DB9E8);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff7db9e8', endColorstr='#ff1e5799', GradientType=0);
+}
