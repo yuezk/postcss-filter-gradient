@@ -128,8 +128,8 @@ function getDirection(gradient) {
         var to = segs[0] === 'to';
         if (to) {
             // sideCorner starts with "to" so we shift it off since we don't
-          // need this element anymore, and continue with generating the
-          // gradient in the normal direction.
+            // need this element anymore, and continue with generating the
+            // gradient in the normal direction.
             segs.shift();
         } else {
             // sideCorner does not start with "to", so we need to reverse the

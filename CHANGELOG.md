@@ -1,3 +1,7 @@
+### 0.2.3 - 2016-02-19
+
+- Add support for direction without "to". by [@lencioni](https://github.com/lencioni)
+
 ### 0.2.2 - 2016-01-13
 
 - Add `skipMultiColor` option.
