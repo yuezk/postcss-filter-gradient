@@ -139,4 +139,8 @@ describe('postcss-filter-gradient', function () {
     it('should handle the `turn` unit correctly', function (done) {
         test('turn', {}, done);
     });
+
+    it('should handle the one-liner background syntax', function (done) {
+        test('one-liner', {}, done);
+    });
 });

@@ -1,0 +1,4 @@
+/* issue #8 */
+a {
+    background: linear-gradient(#626262, #626262 80%, transparent 80%, transparent) 0 bottom / 100% 12px;
+}

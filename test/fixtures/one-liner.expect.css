@@ -1,0 +1,5 @@
+/* issue #8 */
+a {
+    background: linear-gradient(#626262, #626262 80%, transparent 80%, transparent) 0 bottom / 100% 12px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff626262', endColorstr='#00000000', GradientType=0);
+}

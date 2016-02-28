@@ -11,9 +11,9 @@ function hasFilter(rule) {
     return has;
 }
 
-function parseGradient(str) {
+function parseGradient(input) {
     // match 0 and any number with unit
-    var rAngle = /((?:[+-]?\d*\.?\d+)(deg|grad|rad|turn)|0)/;
+    var rAngle = /((?:[+-]?\d*\.?\d+)(deg|grad|rad|turn)|0)/i;
     // match side and any corner, in browser,
     // `top right` and `right top` are the same,
     // so we should put this situation into consideration
@@ -38,13 +38,25 @@ function parseGradient(str) {
     );
 
     // match color stops, the color format is not very precise
-    /* eslint-disable max-len */
-    var rColorStops = /\s*(#[0-9a-f]{3,6}|(?:hsl|rgb)a?\(.+?\)|\w+)(?:\s+((?:[+-]?\d*\.?\d+)(?:%|[a-z]+)?))?/gi;
+    var rColorStops = /(#[0-9a-f]{3,6}|(?:hsl|rgb)a?\(.+?\)|\w+)(?:\s+((?:[+-]?\d*\.?\d+)(?:%|[a-z]+)?))?/gi;
     // the final gradient line regexp
-    var rGradientLine = new RegExp('^\\s*' + rAngle.source + '|' + rSideCorner.source, 'i');
-    /* eslint-enable max-len */
+    var rGradientLine = new RegExp(rAngle.source + '|' + rSideCorner.source, 'i');
+    var rGradient = new RegExp(
+        'linear-gradient\\(\\s*' +
+            '(?:(' + rGradientLine.source + ')\\s*,\\s*)?' + // match gradient line
+            '(' + rColorStops.source + '(?:\\s*,\\s*' + rColorStops.source + ')+)' + // match color stops
+        '\\s*\\)',
+    'i');
 
-    var position = str.match(rGradientLine) || ['', null, 'deg', 'to bottom'];
+    var gradientMatch = rGradient.exec(input);
+
+    if (!gradientMatch) {
+        return null;
+    }
+
+    // remove `linear-gradient(` and `)`
+    var gradientStr = gradientMatch[0].slice(16, -1).trim();
+    var position = gradientStr.match('^' + rGradientLine.source, 'i') || ['', null, 'deg', 'to bottom'];
     var angle = position[1];
     var sideCorner = position[3];
     var unit = position[2];
@@ -52,7 +64,7 @@ function parseGradient(str) {
     var stop;
 
     // remove the gradient line
-    str = str.slice(position[0].length);
+    var str = gradientStr.slice(position[0].length);
 
     while (stop = rColorStops.exec(str)) { // eslint-disable-line
         stops.push({
@@ -200,10 +212,10 @@ function getGradientFromRule(rule) {
     rule.walkDecls(DECL_FILTER, function (decl) {
         var gradients =  getGradientsFromDecl(decl);
         var len = gradients.length;
-        // Only select the first gradienat if there more than one gradienats
+        // Only select the first gradienat if there more than one gradients
         if (len) {
             // skip `linear-gradient`
-            gradient.value = gradients[0].trim().slice(16, -1);
+            gradient.value = gradients[0].trim();
             gradient.decl = decl;
 
             if (len > 1) {
