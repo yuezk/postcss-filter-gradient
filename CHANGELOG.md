@@ -1,3 +1,9 @@
+### 0.2.4 - 2016-02-29
+
+- Fixed #8.
+- Added invalid linear-gradient syntax warnings.
+- Added invalid color format warnings.
+
 ### 0.2.3 - 2016-02-19
 
 - Add support for direction without "to". by [@lencioni](https://github.com/lencioni)
