@@ -28,6 +28,9 @@
     "gulp-mocha": "^2.1.3"
   },
   "scripts": {
-    "test": "gulp"
+    "test": "gulp",
+    "preversion": "npm test",
+    "version": "git add -A",
+    "postversion": "git push origin master --tags"
   }
 }
