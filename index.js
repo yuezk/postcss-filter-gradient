@@ -177,7 +177,13 @@ function getDirection(gradient) {
 function gradientToFilter(gradient) {
     var obj = parseGradient(gradient);
 
-    if (!obj) return null;
+    // The gradient value is not valid
+    if (!obj) {
+        return {
+            success: false,
+            message: '`' + gradient + '` is not a valid linear gradient value.'
+        };
+    }
 
     var startColor = obj.colorStops[0].color;
     var endColor = obj.colorStops.slice(-1)[0].color;
@@ -185,6 +191,7 @@ function gradientToFilter(gradient) {
     var direction = result.direction;
     var type;
     var tmp;
+    var filterString;
 
     // Swap color if needed;
     if (/top|left/i.test(direction)) {
@@ -195,8 +202,20 @@ function gradientToFilter(gradient) {
     // 0: vertical, 1:horizontal
     type = /top|bottom/i.test(direction) ? 0 : 1;
 
+    try {
+        filterString = filterGradient(startColor, endColor, type);
+    } catch (e) {
+        // The color format is not valid
+        console.log(e.message);
+        return {
+            success: false,
+            message: e.message + ' in `' + gradient + '`'
+        };
+    }
+
     return {
-        string: filterGradient(startColor, endColor, type),
+        success: true,
+        string: filterString,
         isMultiColor: obj.colorStops.length > 2,
         isFallback: result.isFallback,
         message: result.message
@@ -254,8 +273,9 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
                     filter = gradientToFilter(gradient.value);
 
                     // warn users when the gradient value is not valid.
-                    if (!filter) {
-                        gradient.decl.warn(result, '`' + gradient.value + '` is not a valid linear gradient value.');
+                    if (!filter.success) {
+                        // gradient.decl.warn(result, '`' + gradient.value + '` is not a valid linear gradient value.');
+                        gradient.decl.warn(result, filter.message);
                         return;
                     }
 
@@ -267,7 +287,7 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
                         return;
                     }
 
-                    // fallback, should warns developer
+                    // should warns developer
                     if (filter.isFallback) {
                         gradient.decl.warn(result, filter.message);
                     }

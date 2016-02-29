@@ -1,0 +1,7 @@
+a {
+    background: linear-gradient(#ffff, #000);
+}
+
+b {
+    background: linear-gradient(to bottom, #000, invalidColor);
+}

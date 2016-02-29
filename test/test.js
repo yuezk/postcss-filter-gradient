@@ -52,6 +52,15 @@ describe('postcss-filter-gradient', function () {
         test('invalid-syntax', {}, done, warnings);
     });
 
+    it('should do nothing when the color format is not valid', function (done) {
+        var warnings = [
+            'Unable to parse color from string "#ffff" in `linear-gradient(#ffff, #000)`',
+            'Unable to parse color from string "invalidColor" in `linear-gradient(to bottom, #000, invalidColor)`'
+        ];
+
+        test('invalid-color', {}, done, warnings);
+    });
+
     it('should support the standard syntax', function (done) {
         test('standard', {}, done);
     });
