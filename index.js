@@ -261,50 +261,49 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
             var gradient;
             var filter;
 
-            if (!hasFilter(rule)) {
-                gradient = getGradientFromRule(rule);
-
-                if (gradient.warnings) {
-                    gradient.decl.warn(result, gradient.warnings);
-                }
-
-                if (!gradient.value) {
-                    return;
-                }
-
-                filter = gradientToFilter(gradient.value);
-
-                // warn users when the gradient value is not valid.
-                if (!filter.success) {
-                    // gradient.decl.warn(result, '`' + gradient.value + '` is not a valid linear gradient value.');
-                    gradient.decl.warn(result, filter.message);
-                    return;
-                }
-
-                if (opts.skipMultiColor && filter.isMultiColor) {
-                    return;
-                }
-
-                if (!opts.angleFallback && filter.isFallback) {
-                    return;
-                }
-
-                // warns developer when `filter.message` is not empty
-                if (filter.message) {
-                    gradient.decl.warn(result, filter.message);
-                }
-
-                // append filter string
-                gradient.decl.cloneAfter({
-                    prop: 'filter', value: filter.string
-                });
-            } else {
+            if (hasFilter(rule)) {
                 rule.warn(
                     result,
-                    'The `filter` declaration already exists, ' +
-                    'we have skipped this rule.'
+                    'The `filter` declaration already exists, we have skipped this rule.'
                 );
+                return;
             }
+
+            gradient = getGradientFromRule(rule);
+
+            if (gradient.warnings) {
+                gradient.decl.warn(result, gradient.warnings);
+            }
+
+            if (!gradient.value) {
+                return;
+            }
+
+            filter = gradientToFilter(gradient.value);
+
+            // warn users when the gradient value is not valid.
+            if (!filter.success) {
+                gradient.decl.warn(result, filter.message);
+                return;
+            }
+
+            if (opts.skipMultiColor && filter.isMultiColor) {
+                return;
+            }
+
+            if (!opts.angleFallback && filter.isFallback) {
+                return;
+            }
+
+            // warn developer when `filter.message` is not empty
+            if (filter.message) {
+                gradient.decl.warn(result, filter.message);
+            }
+
+            // append filter string
+            gradient.decl.cloneAfter({
+                prop: 'filter', value: filter.string
+            });
         });
     };
 });
