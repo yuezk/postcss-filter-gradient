@@ -206,7 +206,6 @@ function gradientToFilter(gradient) {
         filterString = filterGradient(startColor, endColor, type);
     } catch (e) {
         // The color format is not valid
-        console.log(e.message);
         return {
             success: false,
             message: e.message + ' in `' + gradient + '`'
@@ -269,34 +268,36 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
                     gradient.decl.warn(result, gradient.warnings);
                 }
 
-                if (gradient.value) {
-                    filter = gradientToFilter(gradient.value);
-
-                    // warn users when the gradient value is not valid.
-                    if (!filter.success) {
-                        // gradient.decl.warn(result, '`' + gradient.value + '` is not a valid linear gradient value.');
-                        gradient.decl.warn(result, filter.message);
-                        return;
-                    }
-
-                    if (opts.skipMultiColor && filter.isMultiColor) {
-                        return;
-                    }
-
-                    if (!opts.angleFallback && filter.isFallback) {
-                        return;
-                    }
-
-                    // should warns developer
-                    if (filter.isFallback) {
-                        gradient.decl.warn(result, filter.message);
-                    }
-
-                    // append filter string
-                    gradient.decl.cloneAfter({
-                        prop: 'filter', value: filter.string
-                    });
+                if (!gradient.value) {
+                    return;
                 }
+
+                filter = gradientToFilter(gradient.value);
+
+                // warn users when the gradient value is not valid.
+                if (!filter.success) {
+                    // gradient.decl.warn(result, '`' + gradient.value + '` is not a valid linear gradient value.');
+                    gradient.decl.warn(result, filter.message);
+                    return;
+                }
+
+                if (opts.skipMultiColor && filter.isMultiColor) {
+                    return;
+                }
+
+                if (!opts.angleFallback && filter.isFallback) {
+                    return;
+                }
+
+                // warns developer when `filter.message` is not empty
+                if (filter.message) {
+                    gradient.decl.warn(result, filter.message);
+                }
+
+                // append filter string
+                gradient.decl.cloneAfter({
+                    prop: 'filter', value: filter.string
+                });
             } else {
                 rule.warn(
                     result,
