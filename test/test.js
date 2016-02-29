@@ -13,8 +13,9 @@ var test = function (inputFile, opts, done, warnings) {
     postcss([plugin(opts)]).process(input).then(function (result) {
         expect(result.css).to.eql(output);
         if (warnings) {
-            result.warnings().forEach(function (warn) {
-                expect(warn.text).to.eql(warnings);
+            result.warnings().forEach(function (warn, i) {
+                var expectedWarning = Array.isArray(warnings) ? warnings[i] : warnings;
+                expect(warn.text).to.eql(expectedWarning);
             });
         } else {
             expect(result.warnings()).to.be.empty;
@@ -40,6 +41,15 @@ describe('postcss-filter-gradient', function () {
             'we have skipped this rule.';
 
         test('filter', {}, done, warnings);
+    });
+
+    it('should do nothing when handle invalid linear gradient syntax', function (done) {
+        var warnings = [
+            '`linear-gradient()` is not a valid linear gradient value.',
+            '`linear-gradient(#000)` is not a valid linear gradient value.'
+        ];
+
+        test('invalid-syntax', {}, done, warnings);
     });
 
     it('should support the standard syntax', function (done) {

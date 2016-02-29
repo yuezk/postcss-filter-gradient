@@ -176,6 +176,9 @@ function getDirection(gradient) {
 
 function gradientToFilter(gradient) {
     var obj = parseGradient(gradient);
+
+    if (!obj) return null;
+
     var startColor = obj.colorStops[0].color;
     var endColor = obj.colorStops.slice(-1)[0].color;
     var result = getDirection(obj);
@@ -214,7 +217,6 @@ function getGradientFromRule(rule) {
         var len = gradients.length;
         // Only select the first gradienat if there more than one gradients
         if (len) {
-            // skip `linear-gradient`
             gradient.value = gradients[0].trim();
             gradient.decl = decl;
 
@@ -250,6 +252,12 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
 
                 if (gradient.value) {
                     filter = gradientToFilter(gradient.value);
+
+                    // warn users when the gradient value is not valid.
+                    if (!filter) {
+                        gradient.decl.warn(result, '`' + gradient.value + '` is not a valid linear gradient value.');
+                        return;
+                    }
 
                     if (opts.skipMultiColor && filter.isMultiColor) {
                         return;
