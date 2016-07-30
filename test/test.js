@@ -27,6 +27,11 @@ var test = function (inputFile, opts, done, warnings) {
 };
 
 describe('postcss-filter-gradient', function () {
+    it('should not throw errors when `options` is undefined', function (done) {
+        expect(plugin).to.not.throw();
+        done();
+    });
+
     it('should do nothing if linear-gradient not exists', function (done) {
         test('none', {}, done);
     });

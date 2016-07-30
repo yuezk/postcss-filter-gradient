@@ -164,11 +164,9 @@ function getDirection(gradient) {
                 'IE filter doesn\'t support side corner gradient, ' +
                 'we use the first side of the side corner as fallback.';
         }
-    } else if (gradient.angle.value !== undefined) {
+    } else {
         angle = normalizeAngle(gradient.angle.value, gradient.angle.unit);
         result = angleToDirection(angle);
-    } else {
-        result.direction = 'bottom';
     }
 
     return result;
