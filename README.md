@@ -3,10 +3,13 @@
 [PostCSS] plugin for generating the old IE supported filter gradient.
 
 [![Build Status][ci-img]][ci]
+[![Coverage Status][co-img]][co]
 
 [PostCSS]: https://github.com/postcss/postcss
 [ci-img]:  https://travis-ci.org/yuezk/postcss-filter-gradient.svg
 [ci]:      https://travis-ci.org/yuezk/postcss-filter-gradient
+[co-img]: https://coveralls.io/repos/github/yuezk/postcss-filter-gradient/badge.svg?branch=master
+[co]: https://coveralls.io/github/yuezk/postcss-filter-gradient?branch=master
 
 ```css
 .foo {
