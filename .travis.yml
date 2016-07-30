@@ -4,3 +4,4 @@ node_js:
   - stable
   - "4"
   - "0.12"
+after_script: "npm run coveralls"
