@@ -259,15 +259,16 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
             var gradient;
             var filter;
 
-            if (hasFilter(rule)) {
+            gradient = getGradientFromRule(rule);
+
+            // if linear-gradient and `filter` both exist, warn users
+            if (gradient.value && hasFilter(rule)) {
                 rule.warn(
                     result,
                     'The `filter` declaration already exists, we have skipped this rule.'
                 );
                 return;
             }
-
-            gradient = getGradientFromRule(rule);
 
             if (gradient.warnings) {
                 gradient.decl.warn(result, gradient.warnings);

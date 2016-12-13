@@ -48,6 +48,10 @@ describe('postcss-filter-gradient', function () {
         test('filter', {}, done, warnings);
     });
 
+    it('should not waring when linear-gradient does\'nt exists', function (done) {
+        test('filter-not-warning', { }, done);
+    });
+
     it('should do nothing when handle invalid linear gradient syntax', function (done) {
         var warnings = [
             '`linear-gradient()` is not a valid linear gradient value.',
