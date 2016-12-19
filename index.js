@@ -254,7 +254,7 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
     opts.skipMultiColor =
         opts.skipMultiColor === undefined ? false : opts.skipMultiColor;
     opts.skipWarnings =
-        opts.skipWarnings === undefined ? true : opts.skipWarnings;
+        opts.skipWarnings === undefined ? false : opts.skipWarnings;
 
     return function (root, result) {
         root.walkRules(function (rule) {
