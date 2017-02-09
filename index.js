@@ -253,6 +253,8 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
         opts.angleFallback === undefined ?  true : opts.angleFallback;
     opts.skipMultiColor =
         opts.skipMultiColor === undefined ? false : opts.skipMultiColor;
+    opts.skipWarnings =
+        opts.skipWarnings === undefined ? false : opts.skipWarnings;
 
     return function (root, result) {
         root.walkRules(function (rule) {
@@ -261,14 +263,17 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
 
             gradient = getGradientFromRule(rule);
 
-            // if linear-gradient and `filter` both exist, warn users
-            if (gradient.value && hasFilter(rule)) {
-                rule.warn(
-                    result,
-                    'The `filter` declaration already exists, we have skipped this rule.'
-                );
-                return;
+            if (opts.skipWarnings === false) {
+              // if linear-gradient and `filter` both exist, warn users
+              if (gradient.value && hasFilter(rule)) {
+                  rule.warn(
+                      result,
+                      'The `filter` declaration already exists, we have skipped this rule.'
+                  );
+                  return;
+              }
             }
+
 
             if (gradient.warnings) {
                 gradient.decl.warn(result, gradient.warnings);
