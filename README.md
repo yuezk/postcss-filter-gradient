@@ -54,6 +54,12 @@ Default: `false`
 If set to `true`, we will not handle the rules which have multi color stops. It is useful when you want use a
 background color as fallback.
 
+### skipWarnings
+
+Default: `false`
+
+If set to `true`, all warnings will be suppressed.
+
 ## Limitation
 
 The IE filter gradient only support horizontal and vertical directions, and only support two colors. So, if there are more

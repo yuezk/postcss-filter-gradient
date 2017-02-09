@@ -1,4 +1,4 @@
-### 0.2.6 - 2016-12-13
+### 0.2.6 - 2017-02-09
 
 - Add `options.skipWarnings`, fixed #12
 
