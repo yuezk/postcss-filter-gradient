@@ -249,12 +249,9 @@ function getGradientFromRule(rule) {
 
 module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
     opts = opts || {};
-    opts.angleFallback = 
-        opts.angleFallback === undefined ?  true : opts.angleFallback;
-    opts.skipMultiColor =
-        opts.skipMultiColor === undefined ? false : opts.skipMultiColor;
-    opts.skipWarnings =
-        opts.skipWarnings === undefined ? false : opts.skipWarnings;
+    opts.angleFallback = opts.angleFallback !== false;
+    opts.skipMultiColor = opts.skipMultiColor === true;
+    opts.skipWarnings = opts.skipWarnings === true;
 
     function warn(target, result, message) {
         if (opts.skipWarnings) return;
