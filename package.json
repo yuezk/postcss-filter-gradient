@@ -1,6 +1,6 @@
 {
   "name": "postcss-filter-gradient",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "PostCSS plugin for generating the old IE supported filter gradient.",
   "keywords": [
     "postcss",
