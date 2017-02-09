@@ -144,6 +144,23 @@ describe('postcss-filter-gradient', function () {
         }
     );
 
+    describe('options.skipWarnings', function () {
+        var fixtures = [
+            'filter',
+            'invalid-syntax',
+            'invalid-color',
+            'multi-background',
+            'angular-fallback',
+            'sidecorner-fallback'
+        ];
+
+        fixtures.forEach(function (f) {
+            it('should skip `' + f + '` warnings', function (done) {
+                test(f, { skipWarnings: true }, done);
+            });
+        });
+    });
+
     it('should disable angle fallback when `option.angleFallback` is true',
         function (done) {
             test('option-angle-fallback', { angleFallback: false }, done);

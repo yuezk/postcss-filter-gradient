@@ -249,12 +249,14 @@ function getGradientFromRule(rule) {
 
 module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
     opts = opts || {};
-    opts.angleFallback =
-        opts.angleFallback === undefined ?  true : opts.angleFallback;
-    opts.skipMultiColor =
-        opts.skipMultiColor === undefined ? false : opts.skipMultiColor;
-    opts.skipWarnings =
-        opts.skipWarnings === undefined ? false : opts.skipWarnings;
+    opts.angleFallback = opts.angleFallback !== false;
+    opts.skipMultiColor = opts.skipMultiColor === true;
+    opts.skipWarnings = opts.skipWarnings === true;
+
+    function warn(target, result, message) {
+        if (opts.skipWarnings) return;
+        target.warn(result, message);
+    }
 
     return function (root, result) {
         root.walkRules(function (rule) {
@@ -263,20 +265,19 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
 
             gradient = getGradientFromRule(rule);
 
-            if (opts.skipWarnings === false) {
-              // if linear-gradient and `filter` both exist, warn users
-              if (gradient.value && hasFilter(rule)) {
-                  rule.warn(
-                      result,
-                      'The `filter` declaration already exists, we have skipped this rule.'
-                  );
-                  return;
-              }
+            // if linear-gradient and `filter` both exist, warn users
+            if (gradient.value && hasFilter(rule)) {
+                warn(
+                    rule,
+                    result,
+                    'The `filter` declaration already exists, we have skipped this rule.'
+                );
+                return;
             }
 
 
             if (gradient.warnings) {
-                gradient.decl.warn(result, gradient.warnings);
+                warn(gradient.decl, result, gradient.warnings);
             }
 
             if (!gradient.value) {
@@ -287,7 +288,7 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
 
             // warn users when the gradient value is not valid.
             if (!filter.success) {
-                gradient.decl.warn(result, filter.message);
+                warn(gradient.decl, result, filter.message);
                 return;
             }
 
@@ -301,7 +302,7 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
 
             // warn developer when `filter.message` is not empty
             if (filter.message) {
-                gradient.decl.warn(result, filter.message);
+                warn(gradient.decl, result, filter.message);
             }
 
             // append filter string
