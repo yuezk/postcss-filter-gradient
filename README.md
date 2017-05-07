@@ -28,8 +28,16 @@
 
 ## Install
 
+For `postcss 6.x`:
+
 ```sh
 npm install postcss-filter-gradient --save-dev
+```
+
+and for `postcss 5.x`
+
+```sh
+npm install postcss-filter-gradient@0.x --save-dev
 ```
 
 ## Usage
