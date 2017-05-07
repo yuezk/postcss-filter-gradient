@@ -1,3 +1,9 @@
+
+1.0.0 / 2017-05-07
+==================
+
+  * Update postcss to 6.0
+
 ### 0.2.6 - 2017-02-09
 
 - Add `options.skipWarnings`, fixed #12
