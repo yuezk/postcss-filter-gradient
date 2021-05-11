@@ -168,9 +168,9 @@ describe('postcss-filter-gradient', function () {
     );
 
     it('shouldnt handle multi colorstops when `option.skipMultiColor` is true',
-       function (done) {
-           test('option-skip-multicolor', { skipMultiColor: true }, done);
-       }
+        function (done) {
+            test('option-skip-multicolor', { skipMultiColor: true }, done);
+        }
     );
 
     it('should handle the `grad` unit correctly', function (done) {

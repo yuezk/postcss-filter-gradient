@@ -18,7 +18,7 @@ function parseGradient(input) {
     // `top right` and `right top` are the same,
     // so we should put this situation into consideration
     var rSideCorner = new RegExp(
-      '(' + // 1
+        '(' + // 1
           '(?:to\\s+)?' +
           '(?:' +
               '(?:left|right|top|bottom)' +
@@ -46,7 +46,7 @@ function parseGradient(input) {
             '(?:(' + rGradientLine.source + ')\\s*,\\s*)?' + // match gradient line
             '(' + rColorStops.source + '(?:\\s*,\\s*' + rColorStops.source + ')+)' + // match color stops
         '\\s*\\)',
-    'i');
+        'i');
 
     var gradientMatch = rGradient.exec(input);
 
@@ -247,8 +247,7 @@ function getGradientFromRule(rule) {
     return gradient;
 }
 
-module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
-    opts = opts || {};
+module.exports = (opts = {}) => {
     opts.angleFallback = opts.angleFallback !== false;
     opts.skipMultiColor = opts.skipMultiColor === true;
     opts.skipWarnings = opts.skipWarnings === true;
@@ -258,12 +257,10 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
         target.warn(result, message);
     }
 
-    return function (root, result) {
-        root.walkRules(function (rule) {
-            var gradient;
-            var filter;
-
-            gradient = getGradientFromRule(rule);
+    return {
+        postcssPlugin: 'postcss-filter-gradient',
+        Rule(rule, { result }) {
+            const gradient = getGradientFromRule(rule);
 
             // if linear-gradient and `filter` both exist, warn users
             if (gradient.value && hasFilter(rule)) {
@@ -284,7 +281,7 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
                 return;
             }
 
-            filter = gradientToFilter(gradient.value);
+            const filter = gradientToFilter(gradient.value);
 
             // warn users when the gradient value is not valid.
             if (!filter.success) {
@@ -309,6 +306,6 @@ module.exports = postcss.plugin('postcss-filter-gradient', function (opts) {
             gradient.decl.cloneAfter({
                 prop: 'filter', value: filter.string
             });
-        });
+        }
     };
-});
+};
